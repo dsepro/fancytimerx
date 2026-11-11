@@ -1,0 +1,462 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-scale-factor: 1;
+
+    /* Light Theme */
+    --background: 210 40% 98%; /* #f8fafc */
+    --foreground: 222 47% 11%; /* #0f172a */
+    --card: 0 0% 100%; /* #ffffff */
+    --card-foreground: 222 47% 11%; /* #0f172a */
+    --popover: 0 0% 100%; /* #ffffff */
+    --popover-foreground: 222 47% 11%; /* #0f172a */
+    --primary: 200 90% 50%; /* #0ea5e9 */
+    --primary-foreground: 0 0% 100%; /* #ffffff */
+    --secondary: 215 28% 90%; /* #e2e8f0 */
+    --secondary-foreground: 222 47% 11%; /* #0f172a */
+    --muted: 215 28% 90%; /* #e2e8f0 */
+    --muted-foreground: 215 16% 47%; /* #64748b */
+    --accent: 200 90% 50%; /* #0ea5e9 */
+    --accent-foreground: 0 0% 100%; /* #ffffff */
+    --destructive: 349 89% 60%; /* #f43f5e */
+    --destructive-foreground: 0 0% 100%; /* #ffffff */
+    --success: 145 63% 49%; /* #4CAF50 */
+    --success-foreground: 0 0% 100%; /* #ffffff */
+    --border: 213 27% 84%; /* #cbd5e1 */
+    --input: 215 33% 95%; /* #f1f5f9 */
+    --input-foreground: 222 47% 11%; /* #0f172a */
+    --ring: 200 90% 50%; /* #0ea5e9 */
+    
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+
+    /* Sidebar variables (can be adjusted or removed if not using sidebar component extensively) */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222 47% 11%; /* #0f172a */
+    --foreground: 215 28% 90%; /* #e2e8f0 */
+    --card: 215 39% 17%; /* #1e293b - Keeping card slightly lighter than main bg */
+    --card-foreground: 215 28% 90%; /* #e2e8f0 */
+    --popover: 215 39% 17%; /* #1e293b */
+    --popover-foreground: 215 28% 90%; /* #e2e8f0 */
+    
+    /* Updated for timer card UI based on image */
+    --primary: 187 70% 50%; /* cyan for Start button */
+    --primary-foreground: 222 47% 11%; /* dark slate for text on cyan */
+    --secondary: 220 13% 25%; /* dark muted blue/gray for Stop button */
+    --secondary-foreground: 215 28% 80%; /* light gray text for Stop button */
+    --destructive: 0 80% 60%; /* bright red for Reset button */
+    --destructive-foreground: 0 0% 100%; /* white text for Reset button */
+
+    --muted: 215 28% 26%; /* #334155 */
+    --muted-foreground: 216 19% 65%; /* #94a3b8 */
+    --accent: 187 70% 50%; /* using primary cyan as accent too for consistency */
+    --accent-foreground: 222 47% 11%; /* dark slate for text on accent */
+    
+    --success: 145 58% 55%; /* #66BB6A */
+    --success-foreground: 0 0% 0%; /* black */
+    --border: 215 28% 26%; /* #334155 */
+    --input: 222 47% 11%; /* #0f172a */
+    --input-foreground: 215 28% 90%; /* #e2e8f0 */
+    --ring: 187 70% 50%; /* cyan for ring */
+    
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+
+    /* Sidebar variables for dark theme */
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400; /* Base font weight */
+    /* Fallback for browsers without dvh support (older iPadOS). */
+    min-height: 100vh;
+  }
+  html {
+    font-size: calc(16px * var(--font-scale-factor));
+    /* Stop iOS/iPadOS from inflating text on its own in landscape. */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  /* Custom scrollbar for a more polished look */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-muted/50;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/50 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary;
+  }
+}
+
+/* General success button style (can be used if needed, TimerCard now uses primary for Start) */
+.btn-success {
+  @apply bg-success text-success-foreground hover:opacity-90;
+}
+
+/*
+ * Countdown digits.
+ * Sized from the viewport so the clock can never overflow its card when the
+ * window is zoomed (browser zoom shrinks the CSS viewport) or when the in-app
+ * font scale is cranked up. The rem term lets the font buttons grow the digits
+ * until they hit the width they actually have available.
+ */
+.timer-digits {
+  font-size: clamp(1.75rem, 12.5vw, calc(9rem * var(--font-scale-factor, 1)));
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------ *
+ * fancytimerx skin: liquid-glass shell over a slow mesh gradient.
+ * Only the outer shell is glass; text and the timer digits stay on
+ * near-opaque surfaces so contrast never depends on the backdrop.
+ * ------------------------------------------------------------------ */
+
+@layer base {
+  :root {
+    --shell-tint: 200 45% 97%;
+    --mesh-a: 158 55% 84%;
+    --mesh-b: 199 89% 85%;
+    --mesh-c: 42 90% 90%;
+    --mesh-d: 174 60% 86%;
+    --glass-tint: 0 0% 100%;
+    --glass-alpha: 0.46;
+    --glass-edge: 0 0% 100%;
+    --glass-edge-alpha: 0.62;
+    --glass-bar-alpha: 0.52;
+  }
+
+  .dark {
+    --shell-tint: 224 55% 7%;
+    --mesh-a: 187 70% 30%;
+    --mesh-b: 258 62% 45%;
+    --mesh-c: 214 70% 28%;
+    --mesh-d: 168 65% 32%;
+    --glass-tint: 215 45% 20%;
+    --glass-alpha: 0.48;
+    --glass-edge: 0 0% 100%;
+    --glass-edge-alpha: 0.14;
+    --glass-bar-alpha: 0.55;
+  }
+}
+
+/* Fixed backdrop: a few huge, blurred colour blobs drifting slowly. */
+.mesh-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  pointer-events: none;
+  background: hsl(var(--shell-tint));
+}
+
+.mesh-blob {
+  position: absolute;
+  display: block;
+  border-radius: 9999px;
+  filter: blur(70px);
+  opacity: 0.72;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.mesh-blob-a {
+  width: 64vmax;
+  height: 64vmax;
+  left: -20vmax;
+  top: -24vmax;
+  background: hsl(var(--mesh-a));
+  animation: mesh-a 26s ease-in-out infinite alternate;
+}
+
+.mesh-blob-b {
+  width: 58vmax;
+  height: 58vmax;
+  right: -22vmax;
+  top: -14vmax;
+  background: hsl(var(--mesh-b));
+  animation: mesh-b 32s ease-in-out infinite alternate;
+}
+
+.mesh-blob-c {
+  width: 52vmax;
+  height: 52vmax;
+  left: 18vmax;
+  bottom: -26vmax;
+  background: hsl(var(--mesh-c));
+  animation: mesh-c 30s ease-in-out infinite alternate;
+}
+
+.mesh-blob-d {
+  width: 40vmax;
+  height: 40vmax;
+  right: 6vmax;
+  bottom: -16vmax;
+  background: hsl(var(--mesh-d));
+  animation: mesh-d 36s ease-in-out infinite alternate;
+}
+
+@keyframes mesh-a { to { transform: translate3d(9vmax, 7vmax, 0) scale(1.12); } }
+@keyframes mesh-b { to { transform: translate3d(-8vmax, 6vmax, 0) scale(1.08); } }
+@keyframes mesh-c { to { transform: translate3d(6vmax, -8vmax, 0) scale(1.14); } }
+@keyframes mesh-d { to { transform: translate3d(-7vmax, -5vmax, 0) scale(1.1); } }
+
+/* Keep the backdrop still while the countdown runs (saves battery, keeps
+   the room calm), and for anyone who asked for reduced motion. */
+[data-timer-running="true"] .mesh-blob {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mesh-blob {
+    animation: none;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    position: relative;
+    background: hsl(var(--glass-tint) / var(--glass-alpha));
+    border: 1px solid hsl(var(--glass-edge) / var(--glass-edge-alpha));
+    box-shadow:
+      inset 0 1px 0 0 hsl(var(--glass-edge) / 0.45),
+      0 18px 36px -22px hsl(222 47% 11% / 0.45),
+      0 2px 6px -3px hsl(222 47% 11% / 0.18);
+    backdrop-filter: blur(22px) saturate(170%);
+    -webkit-backdrop-filter: blur(22px) saturate(170%);
+  }
+
+  .dark .glass-panel {
+    box-shadow:
+      inset 0 1px 0 0 hsl(0 0% 100% / 0.1),
+      0 24px 48px -26px hsl(0 0% 0% / 0.85),
+      0 2px 8px -4px hsl(0 0% 0% / 0.55);
+  }
+
+  /* Cards that hold small reading text get a thicker pane. */
+  .glass-panel-strong {
+    --glass-alpha: 0.7;
+  }
+
+  .dark .glass-panel-strong {
+    --glass-alpha: 0.68;
+  }
+
+  .glass-bar {
+    background: hsl(var(--glass-tint) / var(--glass-bar-alpha));
+    border-bottom: 1px solid hsl(var(--glass-edge) / calc(var(--glass-edge-alpha) * 0.7));
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+  }
+
+  .glass-btn {
+    background: hsl(var(--glass-tint) / 0.42);
+    border-color: hsl(var(--glass-edge) / var(--glass-edge-alpha));
+    backdrop-filter: blur(14px) saturate(150%);
+    -webkit-backdrop-filter: blur(14px) saturate(150%);
+  }
+
+  .glass-btn:hover {
+    background: hsl(var(--glass-tint) / 0.62);
+  }
+
+  .dark .glass-btn {
+    background: hsl(var(--glass-tint) / 0.38);
+  }
+
+  .dark .glass-btn:hover {
+    background: hsl(var(--glass-tint) / 0.55);
+  }
+}
+
+/* "Solid surfaces" mode: same layout, no transparency, no blur, no motion.
+   Chosen in Exam Setup (and by the @supports fallback below), not by an OS
+   media query: Windows "Transparency effects: off" is common and would
+   otherwise silently flatten the whole design. */
+.reduce-transparency .glass-panel,
+.reduce-transparency .glass-bar,
+.reduce-transparency .glass-btn {
+  background: hsl(var(--card));
+  border-color: hsl(var(--border));
+  box-shadow: 0 1px 2px hsl(222 47% 11% / 0.08);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.reduce-transparency .glass-bar {
+  background: hsl(var(--background));
+}
+
+.reduce-transparency .glass-btn:hover {
+  background: hsl(var(--secondary));
+}
+
+.reduce-transparency .mesh-bg {
+  background: hsl(var(--background));
+}
+
+.reduce-transparency .mesh-blob {
+  display: none;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-panel,
+  .glass-bar,
+  .glass-btn {
+    background: hsl(var(--card));
+  }
+
+  .dark .glass-panel,
+  .dark .glass-bar,
+  .dark .glass-btn {
+    background: hsl(var(--card));
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Daylight switch (vendored from ludion.ai/p/toggle-daylight, MIT).
+ * Only the sizing hook differs: .daylight-frame decides the width.
+ * ------------------------------------------------------------------ */
+[data-ld-part="toggle-daylight"] {
+  --_bg: var(--ld-bg, #f5ecd9);
+  --_surface: var(--ld-surface, #8c9a62);
+  --_fg: var(--ld-fg, #1b2146);
+  --_muted: var(--ld-muted, #7f97b3);
+  --_accent: var(--ld-accent, #efa02c);
+  --_radius: var(--ld-radius, 9999px);
+  --_font: var(--ld-font, system-ui, sans-serif);
+  --_space: var(--ld-space, 8px);
+  --_motion: var(--ld-motion, 200ms);
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  width: min(100%, calc((100vh - 64px) * 1.6439));
+  aspect-ratio: 1.6439;
+  font-family: var(--_font);
+  color: var(--_fg);
+}
+
+[data-ld-part="toggle-daylight"] .probe {
+  display: none;
+}
+
+[data-ld-part="toggle-daylight"] .vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+[data-ld-part="toggle-daylight"] .scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+
+[data-ld-part="toggle-daylight"] .hit {
+  position: absolute;
+  top: 12.121%;
+  left: 7.373%;
+  width: 85.253%;
+  height: 75.758%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--_radius);
+  background: transparent;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+[data-ld-part="toggle-daylight"] .hit:active {
+  cursor: grabbing;
+}
+
+[data-ld-part="toggle-daylight"] .hit:focus {
+  outline: none;
+}
+
+[data-ld-part="toggle-daylight"] .hit:focus-visible {
+  outline: 2px solid var(--_accent);
+  outline-offset: calc(var(--_space) * 0.5);
+  transition: outline-offset var(--_motion) ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-ld-part="toggle-daylight"] .hit:focus-visible {
+    transition: none;
+  }
+}
+
+/* Inside the footer the switch fills its slot instead of the viewport. */
+.daylight-frame [data-ld-part="toggle-daylight"] {
+  width: 100%;
+}
+
+.daylight-frame {
+  width: min(100%, 11.5rem);
+}
+
+.daylight-attribution {
+  font-size: 0.6875rem;
+  line-height: 1.2;
+}
+
+.daylight-attribution a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+
